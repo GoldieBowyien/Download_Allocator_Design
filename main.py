@@ -76,52 +76,71 @@ def start_allocation():
 
 
 frame_1 = customtkinter.CTkFrame(master=app)
+frame_1.grid(pady=20, padx=60)
 
-label_1 = customtkinter.CTkLabel(app,text="Manage Download Files", justify=customtkinter.LEFT)
-label_1.pack(padx=0, pady=10, expand=False)
+label_1 = customtkinter.CTkLabel(master=frame_1,text="Manage Download Files", justify=customtkinter.LEFT)
+label_1.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
-downloads_label = customtkinter.CTkLabel(app, text="Download Directory:", width=10)
-downloads_entry = customtkinter.CTkEntry(app, placeholder_text="Download Directory")
-downloads_entry.pack()
+downloads_label = customtkinter.CTkLabel(master=frame_1, text="Download Directory:", width=10)
+downloads_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
-downloads_button = customtkinter.CTkButton(app, text="Select", command=lambda: select_directory(download_var))
-downloads_label.pack()
+downloads_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Download Directory")
+downloads_entry.grid(row=0, column=1, padx=10, pady=10, sticky="e")
 
-image_label = customtkinter.CTkLabel(app, text="Image Directory:")
-image_entry = customtkinter.CTkEntry(app)
-image_button = customtkinter.CTkButton(app, text="Select", command=lambda: select_directory(image_var))
-image_label.pack()
+#downloads_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(download_var))
+#downloads_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
-video_label = customtkinter.CTkLabel(app, text="Video Directory:")
-video_entry = customtkinter.CTkEntry(app)
-video_button = customtkinter.CTkButton(app, text="Select", command=lambda: select_directory(video_var))
-video_label.pack()
+image_label = customtkinter.CTkLabel(master=frame_1, text="Image Directory:")
+image_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
-sound_label = customtkinter.CTkLabel(app, text="Sound Directory:")
-sound_entry = customtkinter.CTkEntry(app)
-sound_button = customtkinter.CTkButton(app, text="Select", command=lambda: select_directory(sound_var))
-sound_label.pack()
+image_entry = customtkinter.CTkEntry(master=frame_1)
+image_entry.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
-other_label = customtkinter.CTkLabel(app, text="Other Directory:")
-other_entry = customtkinter.CTkEntry(app)
-other_button = customtkinter.CTkButton(app, text="Select", command=lambda: select_directory(other_var))
-other_label.pack()
+#image_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(image_var))
+#image_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+video_label = customtkinter.CTkLabel(master=frame_1, text="Video Directory:")
+video_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+video_entry = customtkinter.CTkEntry(master=frame_1)
+video_entry.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+#video_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(video_var))
+#video_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+sound_label = customtkinter.CTkLabel(master=frame_1, text="Sound Directory:")
+sound_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+sound_entry = customtkinter.CTkEntry(master=frame_1)
+sound_entry.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+#sound_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(sound_var))
+#sound_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+other_label = customtkinter.CTkLabel(master=frame_1, text="Other Directory:")
+other_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+other_entry = customtkinter.CTkEntry(master=frame_1)
+other_entry.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+
+#other_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(other_var))
+#other_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
 
-button_1 = customtkinter.CTkButton(app, command=button_callback, text="Start Allocation")
-button_1.pack()
+button_1 = customtkinter.CTkButton(master=frame_1, command=button_callback, text="Start Allocation")
+button_1.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
 
-entry_1 = customtkinter.CTkEntry(app, placeholder_text="Start Allocation")
-entry_1.pack()
+entry_1 = customtkinter.CTkEntry(master=frame_1, placeholder_text="Start Allocation")
+entry_1.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
 
 
-checkbox_1 = customtkinter.CTkCheckBox(app, text="Remember me")
-checkbox_1.pack()
+checkbox_1 = customtkinter.CTkCheckBox(master=frame_1, text="Remember me")
+checkbox_1.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 
-text_1 = customtkinter.CTkTextbox(app, width=200, height=70)
-text_1.pack()
+text_1 = customtkinter.CTkTextbox(master=frame_1, width=200, height=70)
+text_1.grid(row=0, column=0, padx=10, pady=10, sticky="e")
 text_1.insert("2.0", "Message here\n\n")
 
 app.mainloop()

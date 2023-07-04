@@ -5,13 +5,16 @@ import tkinter as tk
 from tkinter import filedialog
 import customtkinter
 
-customtkinter.set_appearance_mode("dark")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
+customtkinter.set_appearance_mode("light")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
+
+customtkinter.deactivate_automatic_dpi_awareness()
+customtkinter.set_widget_scaling(1.15)  # widget dimensions and text size
+customtkinter.set_window_scaling(1.2)  # window geometry dimensions
 
 app = customtkinter.CTk()
-app.geometry(f"{1100}x{580}")
+app.geometry("500x580")
 app.title("Download Allocator")
-app.config(bg="#3498DB")
 
 
 def button_callback():
@@ -70,77 +73,68 @@ def start_allocation():
     allocation_thread.start()
 
 
-
-
-
-
-
+# Create UI components
 frame_1 = customtkinter.CTkFrame(master=app)
-frame_1.grid(pady=20, padx=60)
+frame_1.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER)
 
-label_1 = customtkinter.CTkLabel(master=frame_1,text="Manage Download Files", justify=customtkinter.LEFT)
-label_1.grid(row=1, column=0, padx=10, pady=10, sticky="e")
+label_1 = customtkinter.CTkLabel(master=frame_1,text="Manage Download Files", justify=customtkinter.CENTER)
+label_1.grid(row=0, column=0, padx=10, pady=10, sticky="ew", columnspan=2)
 
 downloads_label = customtkinter.CTkLabel(master=frame_1, text="Download Directory:", width=10)
-downloads_label.grid(row=1, column=0, padx=10, pady=10, sticky="e")
-
 downloads_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Download Directory")
-downloads_entry.grid(row=1, column=1, padx=10, pady=10, sticky="w")
-
-#downloads_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(download_var))
-#downloads_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+downloads_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(download_var))
 
 image_label = customtkinter.CTkLabel(master=frame_1, text="Image Directory:")
-image_label.grid(row=2, column=0, padx=10, pady=10, sticky="e")
-
-image_entry = customtkinter.CTkEntry(master=frame_1)
-image_entry.grid(row=2, column=1, padx=10, pady=10, sticky="w")
-
-#image_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(image_var))
-#image_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+image_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Image Directory")
+image_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(image_var))
 
 video_label = customtkinter.CTkLabel(master=frame_1, text="Video Directory:")
-video_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
-
-video_entry = customtkinter.CTkEntry(master=frame_1)
-video_entry.grid(row=3, column=1, padx=10, pady=10, sticky="w")
-
-#video_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(video_var))
-#video_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+video_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Video Directory")
+video_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(video_var))
 
 sound_label = customtkinter.CTkLabel(master=frame_1, text="Sound Directory:")
-sound_label.grid(row=4, column=0, padx=10, pady=10, sticky="e")
-
-sound_entry = customtkinter.CTkEntry(master=frame_1)
-sound_entry.grid(row=4, column=1, padx=10, pady=10, sticky="w")
-
-#sound_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(sound_var))
-#sound_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
+sound_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Sound Directory")
+sound_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(sound_var))
 
 other_label = customtkinter.CTkLabel(master=frame_1, text="Other Directory:")
-other_label.grid(row=5, column=0, padx=10, pady=10, sticky="e")
+other_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Other Directory")
+other_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(other_var))
 
-other_entry = customtkinter.CTkEntry(master=frame_1)
-other_entry.grid(row=5, column=1, padx=10, pady=10, sticky="w")
+button_allocate = customtkinter.CTkButton(master=frame_1, command=button_callback, text="Start Allocation")
 
-#other_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(other_var))
-#other_label.grid(row=0, column=0, padx=10, pady=10, sticky="e")
-
-
-button_1 = customtkinter.CTkButton(master=frame_1, command=button_callback, text="Start Allocation")
-button_1.grid(row=6, column=0, padx=10, pady=10, sticky="e")
-
-
-entry_1 = customtkinter.CTkEntry(master=frame_1, placeholder_text="Start Allocation")
-entry_1.grid(row=7, column=0, padx=10, pady=10, sticky="e")
-
-
+entry_allocate = customtkinter.CTkEntry(master=frame_1, placeholder_text="Start Allocation")
 
 checkbox_1 = customtkinter.CTkCheckBox(master=frame_1, text="Remember me")
-checkbox_1.grid(row=8, column=0, padx=10, pady=10, sticky="e")
+checkbox_1.grid(row=9, column=0, padx=10, pady=10, sticky="nsew")
 
-text_1 = customtkinter.CTkTextbox(master=frame_1, width=200, height=70)
-text_1.grid(row=9, column=0, padx=10, pady=10, sticky="e")
-text_1.insert("2.0", "Message here\n\n")
+text_message = customtkinter.CTkTextbox(master=frame_1, width=200, height=70)
+text_message.insert("2.0", "\n\n")
+
+# Grid layout for UI components
+downloads_label.grid(row=2, column=0, padx=10, pady=10, sticky="e")
+downloads_entry.grid(row=2, column=1, padx=10, pady=10, sticky="w")
+downloads_button.grid(row=2, column=2, padx=10, pady=10, sticky="e")
+
+image_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
+image_entry.grid(row=3, column=1, padx=10, pady=10, sticky="w")
+image_button.grid(row=3, column=2, padx=10, pady=10, sticky="e")
+
+video_label.grid(row=4, column=0, padx=10, pady=10, sticky="e")
+video_entry.grid(row=4, column=1, padx=10, pady=10, sticky="w")
+video_button.grid(row=4, column=2, padx=10, pady=10, sticky="e")
+
+sound_label.grid(row=5, column=0, padx=10, pady=10, sticky="e")
+sound_entry.grid(row=5, column=1, padx=10, pady=10, sticky="w")
+sound_button.grid(row=5, column=2, padx=10, pady=10, sticky="e")
+
+other_label.grid(row=6, column=0, padx=10, pady=10, sticky="e")
+other_entry.grid(row=6, column=1, padx=10, pady=10, sticky="w", columnspan=2)
+other_button.grid(row=6, column=2, padx=10, pady=10, sticky="e")
+
+button_allocate.grid(row=7, column=0, padx=10, pady=10, sticky="ew", columnspan=3)
+
+entry_allocate.grid(row=8, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
+
+text_message.grid(row=10, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
 
 app.mainloop()

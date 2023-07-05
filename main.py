@@ -4,8 +4,9 @@ import threading
 import tkinter as tk
 from tkinter import filedialog
 import customtkinter
+from PIL import ImageTk, Image
 
-customtkinter.set_appearance_mode("light")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 
 customtkinter.deactivate_automatic_dpi_awareness()
@@ -72,40 +73,45 @@ def start_allocation():
     allocation_thread = threading.Thread(target=allocate_downloads)
     allocation_thread.start()
 
+#Font configuration
+
 
 # Create UI components
-frame_1 = customtkinter.CTkFrame(master=app)
+img_1 = ImageTk.PhotoImage(Image.open("Pattern.png"))
+pattern=customtkinter.CTkLabel(master=app, image=img_1)
+pattern.pack()
+
+frame_1 = customtkinter.CTkFrame(master=pattern, corner_radius=15)
 frame_1.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER)
 
-label_1 = customtkinter.CTkLabel(master=frame_1,text="Manage Download Files", justify=customtkinter.CENTER)
-label_1.grid(row=0, column=0, padx=10, pady=10, sticky="ew", columnspan=2)
+label_1 = customtkinter.CTkLabel(master=frame_1, text="Manage Download Files", justify=customtkinter.CENTER, font=('Arial Rounded MT Bold', 15))
+label_1.grid(row=0, column=0, padx=10, pady=10, sticky="ew", columnspan=3)
 
 downloads_label = customtkinter.CTkLabel(master=frame_1, text="Download Directory:", width=10)
-downloads_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Download Directory")
-downloads_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(download_var))
+downloads_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Download Directory")
+downloads_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(download_var))
 
 image_label = customtkinter.CTkLabel(master=frame_1, text="Image Directory:")
-image_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Image Directory")
-image_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(image_var))
+image_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Image Directory")
+image_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(image_var))
 
 video_label = customtkinter.CTkLabel(master=frame_1, text="Video Directory:")
-video_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Video Directory")
-video_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(video_var))
+video_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Video Directory")
+video_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(video_var))
 
 sound_label = customtkinter.CTkLabel(master=frame_1, text="Sound Directory:")
-sound_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Sound Directory")
-sound_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(sound_var))
+sound_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Sound Directory")
+sound_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(sound_var))
 
 other_label = customtkinter.CTkLabel(master=frame_1, text="Other Directory:")
-other_entry = customtkinter.CTkEntry(master=frame_1, placeholder_text="Other Directory")
-other_button = customtkinter.CTkButton(master=frame_1, text="Select", command=lambda: select_directory(other_var))
+other_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Other Directory")
+other_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(other_var))
 
 button_allocate = customtkinter.CTkButton(master=frame_1, command=button_callback, text="Start Allocation")
 
 entry_allocate = customtkinter.CTkEntry(master=frame_1, placeholder_text="Start Allocation")
 
 checkbox_1 = customtkinter.CTkCheckBox(master=frame_1, text="Remember me")
-checkbox_1.grid(row=9, column=0, padx=10, pady=10, sticky="nsew")
 
 text_message = customtkinter.CTkTextbox(master=frame_1, width=200, height=70)
 text_message.insert("2.0", "\n\n")
@@ -135,6 +141,9 @@ button_allocate.grid(row=7, column=0, padx=10, pady=10, sticky="ew", columnspan=
 
 entry_allocate.grid(row=8, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
 
+checkbox_1.grid(row=9, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
+
 text_message.grid(row=10, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
+
 
 app.mainloop()

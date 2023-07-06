@@ -6,6 +6,7 @@ from tkinter import filedialog
 import customtkinter
 from PIL import ImageTk, Image
 
+
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 
@@ -16,10 +17,6 @@ customtkinter.set_window_scaling(1.2)  # window geometry dimensions
 app = customtkinter.CTk()
 app.geometry("500x580")
 app.title("Download Allocator")
-
-
-def button_callback():
-    print("Button click")
 
 # Specify the source directory where the downloads are located
 downloads_directory = ""
@@ -73,12 +70,20 @@ def start_allocation():
     allocation_thread = threading.Thread(target=allocate_downloads)
     allocation_thread.start()
 
-#Font configuration
+# Create the main Tkinter window
+window = customtkinter.CTk()
+
+# Create StringVars to hold the directory paths
+downloads_var = tk.StringVar()
+image_var = tk.StringVar()
+video_var = tk.StringVar()
+sound_var = tk.StringVar()
+other_var = tk.StringVar()
 
 
 # Create UI components
-img_1 = ImageTk.PhotoImage(Image.open("Pattern.png"))
-pattern=customtkinter.CTkLabel(master=app, image=img_1)
+image_1 = ImageTk.PhotoImage(Image.open("Pattern.png"))
+pattern=customtkinter.CTkLabel(master=app, image=image_1)
 pattern.pack()
 
 frame_1 = customtkinter.CTkFrame(master=pattern, corner_radius=15)
@@ -87,27 +92,27 @@ frame_1.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER)
 label_1 = customtkinter.CTkLabel(master=frame_1, text="Manage Download Files", justify=customtkinter.CENTER, font=('Arial Rounded MT Bold', 15))
 label_1.grid(row=0, column=0, padx=10, pady=10, sticky="ew", columnspan=3)
 
-downloads_label = customtkinter.CTkLabel(master=frame_1, text="Download Directory:", width=10)
-downloads_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Download Directory")
-downloads_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(download_var))
+downloads_label = customtkinter.CTkLabel(master=frame_1, text="Download Directory:", width=10, font=('Arial Rounded MT Bold', 15))
+downloads_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Download Directory", textvariable=downloads_var)
+downloads_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(downloads_var))
 
 image_label = customtkinter.CTkLabel(master=frame_1, text="Image Directory:")
-image_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Image Directory")
+image_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Image Directory", textvariable=image_var)
 image_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(image_var))
 
 video_label = customtkinter.CTkLabel(master=frame_1, text="Video Directory:")
-video_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Video Directory")
+video_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Video Directory", textvariable=video_var)
 video_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(video_var))
 
 sound_label = customtkinter.CTkLabel(master=frame_1, text="Sound Directory:")
-sound_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Sound Directory")
+sound_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Sound Directory", textvariable=sound_var)
 sound_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(sound_var))
 
 other_label = customtkinter.CTkLabel(master=frame_1, text="Other Directory:")
-other_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Other Directory")
+other_entry = customtkinter.CTkEntry(master=frame_1, width=158, placeholder_text="Other Directory", textvariable=other_var)
 other_button = customtkinter.CTkButton(master=frame_1, text="Select", width=20, command=lambda: select_directory(other_var))
 
-button_allocate = customtkinter.CTkButton(master=frame_1, command=button_callback, text="Start Allocation")
+button_allocate = customtkinter.CTkButton(master=frame_1, command=allocate_downloads, text="Start Allocation")
 
 entry_allocate = customtkinter.CTkEntry(master=frame_1, placeholder_text="Start Allocation")
 

@@ -32,6 +32,13 @@ def allocate_downloads():
     if not os.path.isdir(downloads_directory):
         finish_label.configure("Invalid downloads directory.")
         return
+    
+    # Get the total number of files to allocate
+    total_files = len(os.listdir(downloads_directory))
+
+    # Initialize the progress variables
+    completed_files = 0
+    progress = 0
 
     # Iterate over each file in the downloads directory
     for filename in os.listdir(downloads_directory):
@@ -58,9 +65,21 @@ def allocate_downloads():
             
             # Move the file to the destination directory
             shutil.move(file_path, os.path.join(destination_folder, filename))
+
+            # Update the progress variables
+            completed_files += 1
+            progress = completed_files / total_files * 100
+
+            # Update the progress bar
+            progress_Bar.set(progress)
+            progress_percentage.configure(text=f"{progress:.1f}%")
+
+            # Set the progress to 100% after all files are allocated
+            progress_Bar.set(100)
+            progress_percentage.configure(text="100%")
+            finish_label.configure(text="Completed!")
     else:
-        #finish_label.configure(text="Invalid downloads directory.")
-        finish_label.configure(text="Completed!")
+        finish_label.configure(text="No files to allocate.")
 
 def select_directory(directory_var):
     directory = filedialog.askdirectory()
@@ -76,11 +95,27 @@ def start_allocation():
         sound_directory = sound_var.get()
         other_directory = other_var.get()
 
+        if not downloads_directory or not image_directory or not video_directory or not sound_directory or not other_directory:
+            raise ValueError("Please select all directories.")
+        
+        # Check if the selected directories are valid
+        if not os.path.isdir(downloads_directory) or not os.path.isdir(image_directory) or not os.path.isdir(video_directory) or not os.path.isdir(sound_directory) or not os.path.isdir(other_directory):
+            raise ValueError("Invalid directory selected.")
+
         allocation_thread = threading.Thread(target=allocate_downloads)
         allocation_thread.start()
+
+        # Clear the progress to 0%
+        reset_progress()
+        
+    except ValueError as e:
+        finish_label.configure(text=str(e))
     except:
-        finish_label.configure(text="Invalid Directory Selected.")
-    finish_label.configure(text="Invalid Directory Selected.")
+        finish_label.configure(text="Unable to allocate Files.")
+    
+def reset_progress():
+    progress_Bar.set(0)
+    progress_percentage.configure(text="0%")
 
 # Create the main Tkinter window
 window = customtkinter.CTk()
@@ -128,7 +163,10 @@ button_allocate = customtkinter.CTkButton(master=frame_1, command=start_allocati
 
 finish_label = customtkinter.CTkLabel(master=frame_1, text=" ", font=('Century Gothic', 15))
 
-checkbox_1 = customtkinter.CTkCheckBox(master=frame_1, text="Remember me")
+progress_percentage = customtkinter.CTkLabel(master=frame_1, text="0%")
+
+progress_Bar = customtkinter.CTkProgressBar(master=frame_1, width=200)
+progress_Bar.set(0)
 
 text_message = customtkinter.CTkTextbox(master=frame_1, width=200, height=70)
 text_message.insert("2.0", "\n\n")
@@ -158,11 +196,12 @@ button_allocate.grid(row=7, column=0, padx=10, pady=10, sticky="ew", columnspan=
 
 finish_label.grid(row=8, column=0, padx=10, pady=10, sticky="ew", columnspan=3)
 
-checkbox_1.grid(row=9, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
+progress_percentage.grid(row=9, column=0, padx=5, pady=5, sticky="nsew", columnspan=3)
 
-finish_label.grid(row=8, column=0, columnspan=3, padx=10, pady=10, sticky="nsew")
+progress_Bar.grid(row=10, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
 
-text_message.grid(row=10, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
+
+text_message.grid(row=11, column=0, padx=10, pady=10, sticky="nsew", columnspan=3)
 
 
 app.mainloop()
